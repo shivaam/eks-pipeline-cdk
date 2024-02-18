@@ -14,6 +14,10 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 * `npx cdk synth`   emits the synthesized CloudFormation template
 
 
+Follow two tutorials together :
+https://aws-quickstart.github.io/cdk-eks-blueprints/getting-started/
+https://catalog.workshops.aws/eks-blueprints-for-cdk/en-US/040-multiple-clusters-pipelines/043-addons/1-introducing-add-ons
+
 
 Step 6. Secrets manager token
 Create the aws secrets token using this command
@@ -63,3 +67,5 @@ aws secretsmanager create-secret --name github-ssh-key --secret-string file://se
 Step 10. 
 
 ` cdk build ` - Converts the typescript code to js code and stores in the dis directory.
+
+Check the cloudformation outputs for the command to get the kubectl configuration. 

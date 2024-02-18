@@ -31,7 +31,8 @@ export default class PipelineConstruct extends Construct {
         new blueprints.addons.CalicoOperatorAddOn(),
         new blueprints.addons.ClusterAutoScalerAddOn(),
         new blueprints.addons.VpcCniAddOn(),
-        new blueprints.addons.KubeProxyAddOn()
+        new blueprints.addons.KubeProxyAddOn(),
+        new blueprints.addons.NginxAddOn()
     ];
 
     const blueprint = blueprints.EksBlueprint.builder()
