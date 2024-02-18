@@ -10,6 +10,7 @@ const CLUSTER_VERSION = eks.KubernetesVersion.V1_26;
 const CDK_REPO_NAME = 'eks-pipeline-cdk';
 const GIT_SECRET_NAME = 'github-token';
 
+
 export default class PipelineConstruct extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps){
     super(scope, id)
@@ -17,11 +18,27 @@ export default class PipelineConstruct extends Construct {
     const account = props?.env?.account!;
     const region = props?.env?.region!;
 
+
+        // commonly configured addons
+    const addons: blueprints.ClusterAddOn[] = [
+        new blueprints.addons.AwsLoadBalancerControllerAddOn(),
+        new blueprints.addons.CertManagerAddOn(),
+        new blueprints.addons.SecretsStoreAddOn(),
+        new blueprints.addons.MetricsServerAddOn(),
+        new blueprints.addons.EbsCsiDriverAddOn(),
+        new blueprints.addons.ArgoCDAddOn(),
+        new blueprints.addons.CoreDnsAddOn(),
+        new blueprints.addons.CalicoOperatorAddOn(),
+        new blueprints.addons.ClusterAutoScalerAddOn(),
+        new blueprints.addons.VpcCniAddOn(),
+        new blueprints.addons.KubeProxyAddOn()
+    ];
+
     const blueprint = blueprints.EksBlueprint.builder()
     .version('auto')
     .account(account)
     .region(region)
-    .addOns()
+    .addOns(...addons)
     .teams();
   
     blueprints.CodePipelineStack.builder()
