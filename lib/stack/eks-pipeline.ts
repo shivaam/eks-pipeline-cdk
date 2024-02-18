@@ -33,6 +33,14 @@ export default class PipelineConstruct extends Construct {
         credentialsSecretName: GIT_SECRET_NAME,
         targetRevision: 'master',
     })
+    .wave({
+        id: "envs",
+        stages: [
+          { id: "dev", stackBuilder: blueprint.clone('us-west-2')},
+          { id: "test", stackBuilder: blueprint.clone('us-east-2')},
+          { id: "prod", stackBuilder: blueprint.clone('us-east-1')}
+        ]
+      })
       .build(scope, id+'-stack', props);
   }
 }
