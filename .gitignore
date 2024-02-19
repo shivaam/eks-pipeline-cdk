@@ -4,6 +4,8 @@
 node_modules
 ./scripts/*
 scripts
+./modifcations/*
+./modifcations
 # CDK asset staging directory
 .cdk.staging
 cdk.out

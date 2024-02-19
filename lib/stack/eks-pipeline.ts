@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
 import * as cpactions from 'aws-cdk-lib/aws-codepipeline-actions';
 import * as eks from 'aws-cdk-lib/aws-eks';
+import * as directoryservice from 'aws-cdk-lib/aws-directoryservice';
 
 
 const GITHUB_ORG = 'shivaam';
@@ -18,6 +19,10 @@ export default class PipelineConstruct extends Construct {
     const account = props?.env?.account!;
     const region = props?.env?.region!;
 
+    const awsPcaParams = {
+        iamPolicies: ["AWSCertificateManagerPrivateCAFullAccess"]
+      }
+      const addOn = new blueprints.addons.AWSPrivateCAIssuerAddon(awsPcaParams)
 
         // commonly configured addons
     const addons: blueprints.ClusterAddOn[] = [
@@ -28,11 +33,11 @@ export default class PipelineConstruct extends Construct {
         new blueprints.addons.EbsCsiDriverAddOn(),
         new blueprints.addons.ArgoCDAddOn(),
         new blueprints.addons.CoreDnsAddOn(),
-        new blueprints.addons.CalicoOperatorAddOn(),
         new blueprints.addons.ClusterAutoScalerAddOn(),
         new blueprints.addons.VpcCniAddOn(),
         new blueprints.addons.KubeProxyAddOn(),
-        new blueprints.addons.NginxAddOn()
+        new blueprints.addons.NginxAddOn(),
+        new blueprints.addons.AWSPrivateCAIssuerAddon(awsPcaParams),
     ];
 
     const blueprint = blueprints.EksBlueprint.builder()

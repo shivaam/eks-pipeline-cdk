@@ -69,3 +69,19 @@ Step 10.
 ` cdk build ` - Converts the typescript code to js code and stores in the dis directory.
 
 Check the cloudformation outputs for the command to get the kubectl configuration. 
+
+
+#### Argocd setup
+- allow insecure argocd
+kubectl patch configmap argocd-cm -n argocd --type merge -p '{"data":{"tls.insecure":"true"}}'
+- allow ssl pathtoruh in nfinx
+```
+kubectl patch deployment blueprints-addon-nginx-nginx-ingress-controller -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--enable-ssl-passthrough"}]'
+
+kubectl rollout undo deployment blueprints-addon-nginx-nginx-ingress-controller -n kube-system 
+
+kubectl edit deployment blueprints-addon-nginx-nginx-ingress-controller
+kubectl get configmap blueprints-addon-nginx-nginx-ingress -o yaml
+
+```
+
