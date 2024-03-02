@@ -18,6 +18,8 @@ export default class PipelineConstruct extends Construct {
 
     const account = props?.env?.account!;
     const region = props?.env?.region!;
+    
+    this.validateGithubSecret();
 
     const awsPcaParams = {
         iamPolicies: ["AWSCertificateManagerPrivateCAFullAccess"]
@@ -63,6 +65,15 @@ export default class PipelineConstruct extends Construct {
         ]
       })
       .build(scope, id+'-stack', props);
+  }
+
+  
+  // Check if a secret called githb-token exists in the AWS Secrets Manager before deploying this stack
+  private validateGithubSecret(){
+    const secret = cdk.SecretValue.secretsManager(GIT_SECRET_NAME);
+    if (secret == null){
+      throw new Error(`Secret with name ${GIT_SECRET_NAME} not found in AWS Secrets Manager`);
+    }
   }
 }
 
