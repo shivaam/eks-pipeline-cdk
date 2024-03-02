@@ -31,22 +31,24 @@ def retry_failed_stage(pipeline_name, stage):
             pipelineExecutionId=stage['latestExecution']['pipelineExecutionId'],
             retryMode='FAILED_ACTIONS'
         )
-        print(f"Retrying stage {stage['stageName']}: {response}")
+        print(f"Retrying stage {stage['stageName']}")
     except Exception as e:
         print(f"Error retrying stage {stage['stageName']}: {e}")
 
 def main():
     print(f"Checking pipeline {pipeline_name} for failed stages...")
-    while True:
+    run_max_count = 20
+    while run_max_count > 0:
         failed_stages = check_pipeline_status(pipeline_name)
         if failed_stages:
             print("Failed stages:", len(failed_stages), flush=True)
             for stage in failed_stages:
                 retry_failed_stage(pipeline_name, stage)
-            print(f"Waiting for stage {stage} to complete...")        
+                break # Only retry the first failed stage
+            print(f"Waiting for stage {stage['stageName']} to complete...")        
         else:
             print("No failed stages found.")
-        
+            run_max_count -= 1
         time.sleep(60)  # Check every 60 seconds
 
 if __name__ == "__main__":
