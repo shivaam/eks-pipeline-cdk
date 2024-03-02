@@ -73,9 +73,14 @@ kubectl get configmap blueprints-addon-nginx-nginx-ingress -o yaml
 ```
 
 
+### Troubleshooting
+- Delete a secret from secretsmanager
+`aws secretsmanager delete-secret --secret-id github-token --force-delete-without-recovery --region us-east-1`
+
+- Test a github secret is vaild or not
+`curl -v -H "Authorization: token <secret>" https://api.github.com/user/issues`
 
 
-
-Follow two tutorials together :
+#### Follow two tutorials together :
 https://aws-quickstart.github.io/cdk-eks-blueprints/getting-started/
 https://catalog.workshops.aws/eks-blueprints-for-cdk/en-US/040-multiple-clusters-pipelines/043-addons/1-introducing-add-ons
