@@ -88,6 +88,7 @@ kubectl patch configmap argocd-cm -n argocd --type merge -p '{"data":{"tls.insec
 - Test a github secret is vaild or not
 `curl -v -H "Authorization: token <secret>" https://api.github.com/user/issues`
 
+- If the stack fails with writer timeout errors in a new AWS account it might related to concurrent AWS lambda limits. Lambda is used to install the addOns and more addOns are installed  more is the number of concurrent lambda executions. Either remove or reduce addons or increase the account limites. 
 
 #### Follow two tutorials together :
 https://aws-quickstart.github.io/cdk-eks-blueprints/getting-started/
