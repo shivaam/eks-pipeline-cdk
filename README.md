@@ -58,7 +58,6 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 1. Generate the secrets JSON using  `./scripts/create-argocd-ssh-secret.sh`. It will output the following json. 
 
       ```
-      secrets.json
       {
         "sshPrivateKey": "-----BEGIN OPENSSH PRIVATE KEY-----XXXX----END OPENSSH PRIVATE KEY-----\n",
         "url": "git@github"
@@ -93,3 +92,7 @@ kubectl patch configmap argocd-cm -n argocd --type merge -p '{"data":{"tls.insec
 #### Follow two tutorials together :
 https://aws-quickstart.github.io/cdk-eks-blueprints/getting-started/
 https://catalog.workshops.aws/eks-blueprints-for-cdk/en-US/040-multiple-clusters-pipelines/043-addons/1-introducing-add-ons
+
+
+
+#### How to access the cluster
