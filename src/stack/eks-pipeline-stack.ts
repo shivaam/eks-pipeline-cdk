@@ -1,13 +1,8 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
-import * as cpactions from 'aws-cdk-lib/aws-codepipeline-actions';
-import * as eks from 'aws-cdk-lib/aws-eks';
-import * as directoryservice from 'aws-cdk-lib/aws-directoryservice';
 
 
-const GITHUB_ORG = 'shivaam';
-const CLUSTER_VERSION = eks.KubernetesVersion.V1_26;
 const CDK_REPO_NAME = 'eks-pipeline-cdk';
 const GIT_SECRET_NAME = 'github-token';
 
@@ -50,7 +45,7 @@ export default class PipelineConstruct extends Construct {
     .teams();
   
     blueprints.CodePipelineStack.builder()
-      .name("eks-blueprints-workshop-pipeline")
+      .name("eks-babblebox-pipeline")
       .codeBuildPolicies(blueprints.DEFAULT_BUILD_POLICIES)
       .owner('shivaam')
       .repository({
