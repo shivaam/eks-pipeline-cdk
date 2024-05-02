@@ -5,7 +5,7 @@ import time
 client = boto3.client('codepipeline', region_name='us-east-1')
 
 # Your CodePipeline name
-pipeline_name = 'eks-blueprints-workshop-pipeline'
+pipeline_name = 'eks-babblebox-pipeline'
 
 def check_pipeline_status(pipeline_name):
     """Check the status of the specified pipeline and return any failed stages."""

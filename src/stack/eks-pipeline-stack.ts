@@ -1,11 +1,13 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
+import "reflect-metadata";
 
 
 const CDK_REPO_NAME = 'eks-pipeline-cdk';
 const GIT_SECRET_NAME = 'github-token';
-
+const EKS_CLUSTER_NAME = 'eks-babblebox';
+const PIPELINE_NAME = 'eks-pipeline';
 
 export default class PipelineConstruct extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps){
@@ -24,28 +26,32 @@ export default class PipelineConstruct extends Construct {
         // commonly configured addons
     const addons: blueprints.ClusterAddOn[] = [
         new blueprints.addons.AwsLoadBalancerControllerAddOn(),
-        new blueprints.addons.CertManagerAddOn(),
         new blueprints.addons.SecretsStoreAddOn(),
-        new blueprints.addons.MetricsServerAddOn(),
-        new blueprints.addons.EbsCsiDriverAddOn(),
-        new blueprints.addons.ArgoCDAddOn(),
-        new blueprints.addons.CoreDnsAddOn(),
-        new blueprints.addons.ClusterAutoScalerAddOn(),
-        new blueprints.addons.VpcCniAddOn(),
-        new blueprints.addons.KubeProxyAddOn(),
+        new blueprints.addons.EbsCsiDriverAddOn({
+          version: "auto",
+        }),
+        new blueprints.addons.CoreDnsAddOn({
+          version: "auto",
+        }),
         new blueprints.addons.NginxAddOn(),
-        new blueprints.addons.AWSPrivateCAIssuerAddon(awsPcaParams),
     ];
+    Reflect.defineMetadata("ordered", true, addons[0]); // repeat for all addons
+    Reflect.defineMetadata("ordered", true, addons[1]); // repeat for all addons
+    Reflect.defineMetadata("ordered", true, addons[2]); // repeat for all addons
+    Reflect.defineMetadata("ordered", true, addons[3]); // repeat for all addons
+    Reflect.defineMetadata("ordered", true, addons[4]); // repeat for all addons
+
 
     const blueprint = blueprints.EksBlueprint.builder()
     .version('auto')
     .account(account)
     .region(region)
     .addOns(...addons)
+    .name(EKS_CLUSTER_NAME)
     .teams();
   
     blueprints.CodePipelineStack.builder()
-      .name("eks-babblebox-pipeline")
+      .name(PIPELINE_NAME)
       .codeBuildPolicies(blueprints.DEFAULT_BUILD_POLICIES)
       .owner('shivaam')
       .repository({
