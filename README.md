@@ -97,3 +97,7 @@ https://catalog.workshops.aws/eks-blueprints-for-cdk/en-US/040-multiple-clusters
 
 
 #### How to access the cluster
+The following output is created in the cloudformation stack deployment. Use it to update the kube config. 
+    ```
+    aws eks update-kubeconfig --name prod-blueprint --region us-east-1 --role-arn <role-name>
+    ```

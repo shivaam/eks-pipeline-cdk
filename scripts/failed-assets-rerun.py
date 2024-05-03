@@ -37,7 +37,7 @@ def retry_failed_stage(pipeline_name, stage):
 
 def main():
     print(f"Checking pipeline {pipeline_name} for failed stages...")
-    run_max_count = 20
+    run_max_count = 60
     while run_max_count > 0:
         failed_stages = check_pipeline_status(pipeline_name)
         if failed_stages:
@@ -49,7 +49,7 @@ def main():
         else:
             print("No failed stages found.")
             run_max_count -= 1
-        time.sleep(60)  # Check every 60 seconds
+        time.sleep(120)  # Check every 60 seconds
 
 if __name__ == "__main__":
     main()

@@ -61,6 +61,9 @@
     "@aws-cdk/aws-rds:preventRenderingDeprecatedCredentials": true,
     "@aws-cdk/aws-codepipeline-actions:useNewDefaultBranchForCodeCommitSource": true,
     "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": true,
-    "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": true
+    "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": true,
+    "eks.default.min-size": 2,
+    "eks.default.max-size": 4,
+    "eks.default.desired-size": 2
   }
 }
