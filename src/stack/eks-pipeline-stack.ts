@@ -30,8 +30,8 @@ export default class PipelineConstruct extends Construct {
         new blueprints.addons.EbsCsiDriverAddOn({
           version: "auto",
         }),
-        new blueprints.addons.NginxAddOn(),
         new blueprints.addons.CoreDnsAddOn(),
+        new blueprints.addons.CertManagerAddOn(),
     ];
     Reflect.defineMetadata("ordered", true, addons[0]); // repeat for all addons
     Reflect.defineMetadata("ordered", true, addons[1]); // repeat for all addons
